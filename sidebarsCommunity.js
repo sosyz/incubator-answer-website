@@ -3,6 +3,7 @@ module.exports = {
     'support',
     'team',
     'security',
+    'security-model',
     {
       type: 'category',
       label: 'Contributing',
@@ -21,13 +22,18 @@ module.exports = {
     },
     {
       type: 'link',
-      href: 'https://github.com/apache/incubator-answer/issues',
+      href: 'https://github.com/apache/answer/issues',
       label: 'Feature Request',
     },
     {
       type: 'link',
-      href: 'https://github.com/apache/incubator-answer/projects',
+      href: 'https://github.com/apache/answer/projects',
       label: 'Roadmap',
+    },
+    {
+      type: 'link',
+      href: 'https://www.apache.org/logos/#answer',
+      label: 'Logos',
     },
   ],
 };

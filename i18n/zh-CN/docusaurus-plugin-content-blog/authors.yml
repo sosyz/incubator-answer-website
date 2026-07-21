@@ -13,7 +13,7 @@ LinkinStar:
 fenbox:
   name: Fen
   title: Product Designer
-  url: https://github.com
+  url: https://github.com/fenbox
   image_url: https://avatars.githubusercontent.com/u/360618?v=4
 
 shuai:
@@ -33,3 +33,27 @@ ChenJiaji:
   title: Developer
   url: https://github.com/CHENJUaaa
   image_url: https://avatars.githubusercontent.com/u/137683102?v=4
+
+Joyqi:
+  name: Ning Qi
+  title: PMC Chair
+  url: https://github.com/joyqi
+  image_url: https://avatars.githubusercontent.com/u/59437?v=4
+
+Luffy:
+  name: Luffy
+  title: Developer
+  url: https://github.com/sy-records
+  image_url: https://avatars.githubusercontent.com/u/33931153?v=4
+
+Kumfo:
+  name: Kumfo
+  title: Developer
+  url: https://github.com/kumfo
+  image_url: https://avatars.githubusercontent.com/u/7692591?v=4
+
+Robin:
+  name: Robin
+  title: Developer
+  url: https://github.com/robinv8
+  image_url: https://avatars.githubusercontent.com/u/12277531?v=4

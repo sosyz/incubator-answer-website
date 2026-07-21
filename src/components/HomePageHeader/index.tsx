@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Translate from '@docusaurus/Translate';
 import Icon from '@site/src/components/Icon';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-
+import data from '@site/static/data/stars.json';
 import styles from './index.module.css';
 
 const list = [
@@ -30,7 +30,6 @@ const list = [
 ]
 
 const HomeHead: FC = () => {
-  const [stars, setStars] = useState(0);
   const [slogan, setSlogan] = useState(<Translate id="home.title.qa">
   Q&A Platform
 </Translate>);
@@ -38,16 +37,7 @@ const HomeHead: FC = () => {
 
   const { i18n: { currentLocale } } = useDocusaurusContext();
 
-
   useEffect(() => {
-    fetch('https://img.shields.io/github/stars/apache/incubator-answer')
-      .then((response) => response.text())
-      .then((data) => {
-        const num = data.match(/<text .*>(.*?)<\/text>/)[1];
-        if (num) {
-          setStars(num);
-        }
-      });
       let i = 0;
       const timer = setInterval(() => {
         setSloganClss('sloganOut');
@@ -64,6 +54,8 @@ const HomeHead: FC = () => {
       clearInterval(timer)
     }
   }, []);
+
+
 
   function numWord($num) {
     if ($num >= 1000 && $num < 1000000) {
@@ -134,21 +126,13 @@ const HomeHead: FC = () => {
                 size="lg"
                 variant="dark"
                 className="btnMain fw-normal fs-20"
-                href="https://github.com/apache/incubator-answer"
+                href="https://github.com/apache/answer"
                 target="_blank"
               >
                 <Icon name="github" size="24px"  className="me-2" />
                 {` Star `}
-                {stars !== 0 ? numWord(stars) : ''}
+                {numWord(data.stars)}
               </Button>
-            </div>
-
-            <div className="text-secondary text-center fs-14">
-              <Translate
-                id="home.apache.answer"
-              >
-                Apache Answer is an effort undergoing incubation at The Apache Software Foundation.
-              </Translate>
             </div>
           </Col>
         </Row>

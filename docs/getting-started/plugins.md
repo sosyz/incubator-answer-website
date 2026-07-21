@@ -14,7 +14,7 @@ When we need to extend Apache Answer's functionality, such as adding OAuth login
 
 ### Official Plugins
 
-You can find a list of officially supported plugins for Apache Answer [here](https://github.com/apache/incubator-answer-plugins).
+You can find a list of officially supported plugins for Apache Answer [here](https://github.com/apache/answer-plugins).
 
 ## Build
 
@@ -43,22 +43,22 @@ You can specify the plugins to use with the `--with` parameter:
 
 ```shell
 # Build Answer with the GitHub connector plugin
-$ ./answer build --with github.com/apache/incubator-answer-plugins/connector-github
+$ ./answer build --with github.com/apache/answer-plugins/connector-github
 ```
 
 You can also specify the plugin version:
 
 ```shell
 # Build Answer with the GitHub connector plugin version 1.0.0
-$ ./answer build --with github.com/apache/incubator-answer-plugins/connector-github@1.0.0 --output ./new_answer
+$ ./answer build --with github.com/apache/answer-plugins/connector-github@1.0.0 --output ./new_answer
 ```
 
 You can use multiple plugins at the same time:
 
 ```shell
 $ ./answer build \
---with github.com/apache/incubator-answer-plugins/connector-github \
---with github.com/apache/incubator-answer-plugins/connector-google
+--with github.com/apache/answer-plugins/connector-github \
+--with github.com/apache/answer-plugins/connector-google
 ```
 
 #### Using Local Plugins
@@ -66,7 +66,7 @@ $ ./answer build \
 If you need to use a local plugin, you can use the following command:
 
 ```shell
-$ ./answer build --with github.com/apache/incubator-answer-plugins/connector-github@1.0.0=/my-local-space
+$ ./answer build --with github.com/apache/answer-plugins/connector-github@1.0.0=/my-local-space
 ```
 
 #### Cross Compilation
@@ -74,7 +74,7 @@ $ ./answer build --with github.com/apache/incubator-answer-plugins/connector-git
 You can use the following command to build a Linux-amd64 binary on macOS:
 
 ```shell
-$ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ./answer build --with github.com/apache/incubator-answer-plugins/connector-github
+$ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ./answer build --with github.com/apache/answer-plugins/connector-github
 ```
 
 #### Specifying the Answer Version
@@ -82,7 +82,7 @@ $ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ./answer build --with github.com/apache/
 You can use the `ANSWER_MODULE` environment variable to specify the Answer version:
 
 ```shell
-$ ANSWER_MODULE=github.com/apache/incubator-answer@v1.2.0-RC1 ./answer build --with github.com/apache/incubator-answer-plugins/connector-github
+$ ANSWER_MODULE=github.com/apache/answer@v1.2.0-RC1 ./answer build --with github.com/apache/answer-plugins/connector-github
 ```
 
 :::tip
@@ -106,18 +106,18 @@ $ ./new_answer plugin
 ```dockerfile  title="Dockerfile"
 FROM apache/answer as answer-builder
 
-FROM golang:1.19-alpine AS golang-builder
+FROM golang:1.22-alpine AS golang-builder
 
 COPY --from=answer-builder /usr/bin/answer /usr/bin/answer
 
 RUN apk --no-cache add \
     build-base git bash nodejs npm go && \
-    npm install -g pnpm@8.9.2
+    npm install -g pnpm@10.7.0
 
 RUN answer build \
-    --with github.com/apache/incubator-answer-plugins/connector-basic \
-    --with github.com/apache/incubator-answer-plugins/storage-s3 \
-    --with github.com/apache/incubator-answer-plugins/search-elasticsearch \
+    --with github.com/apache/answer-plugins/connector-basic \
+    --with github.com/apache/answer-plugins/storage-s3 \
+    --with github.com/apache/answer-plugins/search-elasticsearch \
     --output /usr/bin/new_answer
 
 FROM alpine
@@ -164,10 +164,10 @@ $ docker run -d -p 9080:80 -v answer-data:/data --name answer answer-with-plugin
 1. **keep your code up-to-date**: Make sure your local code is synchronized with the official repositories, or at least with the v1.3.5 version.
 2. **add required plugins**: Add your required plugin repositories to the `/script/plugin_list` file in the root directory, one per line.
 ```
-github.com/apache/incubator-answer-plugins/connector-basic@latest  
-github.com/apache/incubator-answer-plugins/reviewer-basic@latest  
-github.com/apache/incubator-answer-plugins/captcha-basic@latest  
-github.com/apache/incubator-answer-plugins/editor_formula@latest
+github.com/apache/answer-plugins/connector-basic@latest  
+github.com/apache/answer-plugins/reviewer-basic@latest  
+github.com/apache/answer-plugins/captcha-basic@latest  
+github.com/apache/answer-plugins/editor_formula@latest
 ```
 3. **build the Docker image**: Run the `docker build -t <name[:tag]> . ` command to start building the image.
 4. **verify image construction**: Run the `docker run -d -p 9080:80 -v answer-data:/data --name <container_name> <image_name>` command to start the container and locally verify whether the image is built successfully.
@@ -192,7 +192,7 @@ You need to build a new Apache Answer binary with the new plugin version, then r
 
 :::tip
 
-We recommend the use of [official plugins](https://github.com/apache/incubator-answer-plugins). If you want to use third-party plugins, refer to the following.
+We recommend the use of [official plugins](https://github.com/apache/answer-plugins). If you want to use third-party plugins, refer to the following.
 
 :::
 
@@ -205,4 +205,4 @@ Please refer to [the documentation](/docs/development) for details.
 
 ## Design & Principle
 
-Since Go is a static language, there is no friendly plugin mechanism. Instead of a dynamic approach, we use recompilation for deployment. Please refer to [the blog](/blog/2023/07/22/why-the-answer-plugin-system-was-designed-this-way) for details.
+Since Go is a static language, there is no friendly plugin mechanism. Instead of a dynamic approach, we use recompilation for deployment. Please refer to [the blog](/blog/why-the-answer-plugin-system-was-designed-this-way) for details.

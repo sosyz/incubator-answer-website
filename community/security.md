@@ -4,9 +4,25 @@ slug: /security
 
 # Security
 
-The Apache Software Foundation takes a rigorous stance on eliminating security issues in its software projects. If you find a security bug, with that in mind, please do not file public issues. You can follow the instructions in the [security policy](https://github.com/apache/incubator-answer/security/policy) to report it privately. We will fix it as soon as possible.
+The Apache Software Foundation takes a rigorous stance on eliminating security issues in its software projects. If you find a security bug, with that in mind, please do not file public issues. Before reporting a security issue, check the [security model](/community/security-model). To report a new vulnerability you have discovered, please follow the [ASF security vulnerability reporting process](https://apache.org/security/#reporting-a-vulnerability). The Answer community follows the [ASF security vulnerability handling process](https://apache.org/security/#vulnerability-handling), and will fix it as soon as possible.
 
 # Security fixes
+
+## v1.4.2
+
+### CVE-2025-29868
+
+If a user uses an externally referenced image, when a user accesses this image, the provider of the image may obtain private information about the ip address of that accessing user.
+
+https://www.cve.org/CVERecord?id=CVE-2025-29868
+
+## v1.4.0
+
+### CVE-2024-45719
+
+The ids generated using the UUID v1 version are to some extent not secure enough. It can cause the generated token to be predictable.
+
+https://www.cve.org/CVERecord?id=CVE-2024-45719
 
 ## v1.3.5
 

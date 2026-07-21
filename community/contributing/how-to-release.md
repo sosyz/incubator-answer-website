@@ -33,7 +33,7 @@ $ gpg  --keyid-format SHORT --list-keys
 $ gpg --keyserver keyserver.ubuntu.com --send-key xxx
 
 # append the GPG key to the KEYS file the svn repository
-$ svn co https://dist.apache.org/repos/dist/release/incubator/answer/
+$ svn co https://dist.apache.org/repos/dist/release/answer/
 $ (gpg --list-sigs xxx@apache.org && gpg --export --armor xxx@apache.org) >> KEYS
 $ svn ci -m "add gpg key" 
 ```
@@ -80,25 +80,25 @@ $ for i in *.tar.gz; do echo $i; sha512sum  $i > $i.sha512 ; done
 ```
 
 ### Upload to the svn repository
-> **NOTICE** The repository address where the GPG key is created and the prepository address where the release artifacts are uploaded are not the same. The GPG key is uploaded to the `https://dist.apache.org/repos/dist/release/incubator/answer/` repository, and the release artifacts are uploaded to the `https://dist.apache.org/repos/dist/dev/incubator/answer/` repository.
+> **NOTICE** The repository address where the GPG key is created and the prepository address where the release artifacts are uploaded are not the same. The GPG key is uploaded to the `https://dist.apache.org/repos/dist/release/answer/` repository, and the release artifacts are uploaded to the `https://dist.apache.org/repos/dist/dev/answer/` repository.
 
 1. Create a directory for the release artifacts in the svn repository.
    ```shell
-   $ svn co https://dist.apache.org/repos/dist/dev/incubator/answer/
+   $ svn co https://dist.apache.org/repos/dist/dev/answer/
    ```
 2. Upload the release artifacts to the svn repository.
    ```shell
    $ cp /path/to/release/artifacts/* ./{release-version}/
    $ svn add ./{release-version}/*
    ```
-3. release-version format: 1.2.0-incubating
+3. release-version format: 1.2.0
    ```shell
    $ svn commit -m "add Apache Answer release artifacts for {release-version}"
    ```
-The release artifacts should be uploaded to the `https://dist.apache.org/repos/dist/dev/incubator/answer/{release-version}` directory.
+The release artifacts should be uploaded to the `https://dist.apache.org/repos/dist/dev/answer/{release-version}` directory.
 
 
-**IMPORTANT** After completion, visit the link `https://dist.apache.org/repos/dist/dev/incubator/answer/{release-version}` to check whether the file upload is correct.
+**IMPORTANT** After completion, visit the link `https://dist.apache.org/repos/dist/dev/answer/{release-version}` to check whether the file upload is correct.
 
 ![correct result](/img/community/release.jpeg)
 
@@ -118,7 +118,7 @@ Following is the basic check items for the release artifacts.
 
 ```shell
 # download KEYS
-$ curl https://downloads.apache.org/incubator/answer/KEYS > KEYS
+$ curl https://downloads.apache.org/answer/KEYS > KEYS
 
 # import KEYS and trust the key, please replace the email address with the one you want to trust.
 $ gpg --import KEYS
@@ -146,54 +146,40 @@ $ for i in *.tar.gz; do echo $i; sha512sum --check  $i.sha512; done
 
 ## Start a vote
 
-1. Send a vote email to the dev@answer.apache.org. Incubator need to first do a vote on their dev list and that vote requires at least **3 +1s from Apache Answer PPMC members**.
-2. Wait for at **least 72 hours** or until the necessary number of votes are reached.
-3. Announce the result of the vote on the dev list.
-4. If the dev vote passes, send email to the general@incubator.apache.org to request a vote on the general list. The incubator vote needs at least **3 +1s from Incubator PMC members**
-   (binding votes).
-5. Wait for at **least 72 hours** or until the necessary number of votes are reached.
-6. Announce the result of the vote on the general list.
+> Apache Answer has graduated from incubation and only needs to be voted by the community
 
-### Vote email template
+1. The Apache Answer community votes, send a voting email to `dev@answer.apache.org`. PMC needs to check the correctness of the version according to the document before voting. 
+2. After at least 72 hours and counting 3 +1 PMC member votes, you can enter the next stage.
+3. Announce the voting result, and send the voting result email to `dev@answer.apache.org`. See the vote result email template below.
 
-**NOTICE**  Directly copying the email content will cause the format to be incorrect. It is recommended to copy the email to a `.txt` file. After writing the content, copy it into the email tool you are using.  `The vote tread` and `Vote Result` is not needed during the first round of voting in dev.
+### Dev Mailing List Vote Template
 
-How to get the link to The vote thread:
-1. Find the email you sent from the apache mailing list.
-2. Click the link button below the email to get the link you need.
+```
+[VOTE] Release Apache Answer {release-version}
 
-![vote thread link](/img/community/vote-tread-link.jpeg)
+Hello Apache Answer Community,
 
-
-
-```text
-[VOTE] Release Apache Answer (Incubating) {release-version}
-
-Hello,
-
-    This is a call for vote to release Apache Answer (Incubating) version {release-version}.
-
-    The vote thread:
-        https://lists.apache.org/thread/{id}
-
-    Vote Result:
-        https://lists.apache.org/thread/{id}
+    This is a call for vote to release Apache Answer version {release-version}.
 
     The release candidates:
-        https://dist.apache.org/repos/dist/dev/incubator/answer/{release-version}/
-    
+    https://dist.apache.org/repos/dist/dev/answer/{release-version}
+
     Release notes:
-        https://github.com/apache/incubator-answer/releases/tag/{release-version}
+    https://github.com/apache/answer/releases/tag/v{release-version}
 
     Git tag for the release:
-        https://github.com/apache/incubator-answer/releases/tag/{release-version}
-    
+    https://github.com/apache/answer/releases/tag/v{release-version}
+
     Git commit id for the release:
-        https://github.com/apache/incubator-answer/commit/{id}
+    https://github.com/apache/answer/commit/{commit-hash}
 
     Keys to verify the Release Candidate:
-        https://downloads.apache.org/incubator/answer/KEYS
-        
+    https://downloads.apache.org/answer/KEYS
+
+    Keys to verify the Release Candidate:
+    The artifacts signed with PGP key [{key-id}], corresponding to [{email}], that can be found in keys file:
+    https://dist.apache.org/repos/dist/release/answer/KEYS
+
     The vote will be open for at least 72 hours or until the necessary number of votes are reached.
 
     Please vote accordingly:
@@ -207,24 +193,71 @@ Hello,
     [ ] Download links are valid.
     [ ] Checksums and PGP signatures are valid.
     [ ] Source code distributions have correct names matching the current release.
-    [ ] LICENSE and NOTICE files are correct for each Apache Answer repo.
+    [ ] LICENSE and NOTICE files are correct for each Answer repo.
     [ ] All files have license headers if necessary.
     [ ] No unlicensed compiled archives bundled in source archive.
 
     To compile from the source, please refer to:
-    
-    https://github.com/apache/incubator-answer#building-from-source
+
+    https://github.com/apache/answer#building-from-source
 
 Thanks,
 <YOUR NAME>
 ```
 
+### Vote Result Email Template
+
+After the vote closes (after at least 72 hours and with at least 3 +1 PMC member votes), send the following email to `dev@answer.apache.org` to announce the voting result:
+
+```
+[RESULT][VOTE] Release Apache Answer {release-version}-RC{rc-version}
+
+Hello everyone,
+
+The vote closes now with the following results:
+
+{total-votes} (+1 binding) votes
+- {voter-1-name}
+- {voter-2-name}
+- {voter-3-name}
+{... additional voters if any ...}
+
+The vote has passed successfully. We will proceed with migrating the release artifacts and creating the final release.
+
+Thanks to everyone who participated in the vote.
+
+Best regards,
+<YOUR NAME>
+```
+
+> **IMPORTANT**: Replace `{release-version}` with the actual release version (e.g., `1.7.0`) and `{rc-version}` with the RC version (e.g., `RC1`). List all voters who cast +1 binding votes. The total number should match the count of +1 binding votes received.
+
+## Voting Timeout Situation
+
+If the vote has been pending for more than 72 hours without reaching the required number of votes, you can send the following reminder email to dev@answer.apache.org:
+
+```
+Dear PMC Members,
+
+Apache Answer version {release-version} has been pending for voting for more
+than 72 hours. If any PMC member is available, please help us get the
+ballot completed. Currently, we are still missing +1 binding vote to
+finalize the process.
+
+https://lists.apache.org/thread/{thread-id}
+
+Best regards,
+<YOUR NAME>
+```
+
+If there is still no response after the reminder to the dev mailing list, you should send private emails to the project mentors requesting their vote. This helps ensure timely processing of the release vote.
+
 ## Migration candidate to the release Apache SVN
 
-Before announcing the vote result, you need to migrate the release artifacts from the dev Apache SVN to the release Apache SVN. The release artifacts should be uploaded to the `https://dist.apache.org/repos/dist/release/incubator/answer/{release-version}` directory.
+Before announcing the vote result, you need to migrate the release artifacts from the dev Apache SVN to the release Apache SVN. The release artifacts should be uploaded to the `https://dist.apache.org/repos/dist/release/answer/{release-version}` directory.
 
 ```shell
-$ svn mv https://dist.apache.org/repos/dist/dev/incubator/answer/{release-version} https://dist.apache.org/repos/dist/release/incubator/answer/{release-version} -m "transfer packages for answer {release-version}"
+$ svn mv https://dist.apache.org/repos/dist/dev/answer/{release-version} https://dist.apache.org/repos/dist/release/answer/{release-version} -m "transfer packages for answer {release-version}"
 ```
 
 ## Create a release
@@ -240,29 +273,30 @@ $ git push origin v{release-version}
 
 Update the download page with the new release version. The download page is located in the `src/pages/download.tsx` file.
 
-
 ## Announce the vote result and release.
 
-After the vote is passed, send an email to the an announce@apache.org and cc dev@answer.apache.org、general@incubator.apache.org to announce the vote result and release.
+After the vote is passed, send an email to the an announce@apache.org and cc dev@answer.apache.org to announce the vote result and release.
 
 ### email template
 
 ```text
+[ANNOUNCE] Apache Answer {release-version} available
+
 Hello everyone,
 
-The Apache Answer (Incubating) {release-version} has been released!
+The Apache Answer {release-version} has been released!
 
 Apache Answer is a Q&A platform software for teams at any scale.
 Whether it's a community forum, help center, or knowledge management platform, you can always count on Apache Answer.
 
-Download Links: https://downloads.apache.org/incubator/answer/
+Download Links: https://answer.apache.org/download/
 
-Release Notes: https://github.com/apache/incubator-answer/releases/tag/{release-version}
+Release Notes: https://github.com/apache/answer/releases/tag/v{release-version}
 
 Website: https://answer.apache.org/
 
 Resources:
-- Issue: https://github.com/apache/incubator-answer/issues
+- Issue: https://github.com/apache/answer/issues
 - Mailing list: dev@answer.apache.org
 
 Thanks,

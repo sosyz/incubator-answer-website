@@ -9,16 +9,18 @@ The Apache Answer team works on the core functionality, plugins, as well as the 
 
 import UserData from '/data/team.json';
 
-## Podling PMC
+## PMC
 
-Each Podling Project Management Committee (PPMC) helps its Podling learn how to govern itself. It works like a PMC but reports to the Incubator PMC instead of to the ASF Board. Initially, it is composed of the Podling’s mentors and the initial committers. The PPMC is directly responsible for the oversight of the podling, and it also decides who to add as a PPMC member.
+The PMC is responsible for the management of the project. This includes both the technical decisions and ensuring that the project is operating in community-friendly ways. PMCs are also responsible for managing their project’s brand and trademarks.
+
+The PMC is also responsible for voting on releases of their project, to ensure that each release is tested and is an official ASF release artifact.
 
 <div className="row">
   {
     UserData[0].users.map(u => {
       return (
         <div key={u.name} className="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-12 d-flex mb-4">
-            <img src={u.avatar} width="48" height="48" className="rounded me-2 lh-normal" />
+            <img src={u.avatar_local} width="48" height="48" className="rounded me-2 lh-normal" />
             <div>
               <a href={u.github} target="_blank" className="d-block lh-base">{u.name}</a>
               <div className="fs-14 text-secondary">{u.role}</div>
@@ -38,7 +40,7 @@ Committers have read-write access to the code repository, signed the CLA, and us
     UserData[1].users.map(u => {
       return (
         <div key={u.name} className="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-12 d-flex mb-4">
-            <img src={u.avatar} width="48" height="48" className="rounded me-2 lh-normal" />
+            <img src={u.avatar_local} width="48" height="48" className="rounded me-2 lh-normal" />
             <div>
               <a href={u.github} target="_blank" className="d-block lh-base">{u.name}</a>
               <div className="fs-14 text-secondary">{u.role}</div>
@@ -83,14 +85,13 @@ Becoming a contributor means you are interested in and contribute to the project
 
 You can find all the code contributors on and translation contributors on these pages:
 
-- [Contributors to apache/incubator-answer](https://github.com/apache/incubator-answer/graphs/contributors)
-- [Contributors to apache/incubator-answer-plugins](https://github.com/apache/incubator-answer-plugins/graphs/contributors)
-- [Contributors to apache/incubator-answer-website](https://github.com/apache/incubator-answer-website/graphs/contributors)
+- [Contributors to apache/answer](https://github.com/apache/answer/graphs/contributors)
+- [Contributors to apache/answer-plugins](https://github.com/apache/answer-plugins/graphs/contributors)
+- [Contributors to apache/answer-website](https://github.com/apache/answer-website/graphs/contributors)
 - [Contributors to translation](https://crowdin.com/project/answer/reports/top-members)
 
 ## Reference
 
 - https://community.apache.org/contributors
 - https://community.apache.org/contributors/becomingacommitter.html
-- https://incubator.apache.org/guides/ppmc.html
 - https://www.apache.org/dev/pmc.html

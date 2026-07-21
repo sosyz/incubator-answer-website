@@ -22,7 +22,8 @@ import Footer from '@theme/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
 import type {Props} from '@theme/Layout';
-import mixpanel from 'mixpanel-browser';
+import BrowserLanguage from './BrowserLanguage';
+import GlobalHead from './globalHead';
 
 import styles from './styles.module.css';
 
@@ -36,21 +37,12 @@ export default function Layout(props: Props): JSX.Element {
     description,
   } = props;
 
-  const location = useLocation();
-
   useKeyboardNavigation();
 
-  useEffect(() => {
-    mixpanel.init('84c6c96fab326b95afbbd54aadda641b');
-  }, [])
-
-  useEffect(() => {
-    // console.log('Layout.tsx: location.pathname: ', location);
-    mixpanel.track_pageview();
-  }, [location]);
 
   return (
     <LayoutProvider>
+      <GlobalHead />
       <PageMetadata title={title} description={description} />
 
       <SkipToContent />
@@ -58,6 +50,7 @@ export default function Layout(props: Props): JSX.Element {
       <AnnouncementBar />
 
       <Navbar />
+      <BrowserLanguage />
 
       <div
         id={SkipToContentFallbackId}

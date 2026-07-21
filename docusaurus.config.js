@@ -9,9 +9,10 @@ const asfLinks = [
   {to: 'https://www.apache.org/events/current-event.html', label: 'Events'},
   {to: 'https://www.apache.org/foundation/sponsorship.html', label: 'Sponsorship'},
   {to: 'https://privacy.apache.org/policies/privacy-policy-public.html', label: 'Privacy'},
-  {to: 'https://www.apache.org/security/', label: 'Security'},
+  {to: 'community/security', label: 'Security'},
   {to: 'https://www.apache.org/foundation/thanks.html', label: 'Thanks'},
 ];
+const redirectPaths = require('./redirects.js');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -26,7 +27,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'apache', // Usually your GitHub org/user name.
-  projectName: 'incubator-answer', // Usually your repo name.
+  projectName: 'answer', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -67,7 +68,7 @@ const config = {
             if (locale !== 'en') {
               return `https://crowdin.com/project/answer-website/zh-CN`;
             }
-            return `https://github.com/apache/incubator-answer-website/edit/main/${versionDocsDirPath}/${docPath}`;
+            return `https://github.com/apache/answer-website/edit/main/${versionDocsDirPath}/${docPath}`;
           },
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
@@ -87,13 +88,13 @@ const config = {
         disableSwitch: true,
         respectPrefersColorScheme: false,
       },
-      algolia: {
-        appId: 'ALIEPVY5A0',
-        apiKey: 'a7f83132b511548fc8fbc44f83239bf9',
-        indexName: 'answer',
-        container: '### REPLACE ME WITH A CONTAINER (e.g. div) ###',
-        debug: true
-      },
+      // algolia: {
+      //   appId: '3HYC7VUYNM',
+      //   apiKey: 'a5ab35036f4ec013766e0d65f4f9a1ad',
+      //   indexName: 'answer_apache_org_3hyc7vuynm_pages',
+      //   contextualSearch: true,
+      //   debug: true
+      // },
       navbar: {
         logo: {
           alt: 'Answer Logo',
@@ -139,13 +140,17 @@ const config = {
                 to: 'community/security',
               },
               {
+                label: 'Security Model',
+                to: 'community/security-model',
+              },
+              {
                 label: 'Contributing',
                 to: 'community/contributing',
               },
               {
                 label: 'Roadmap',
-                to: 'https://github.com/apache/incubator-answer/projects',
-              },
+                to: 'https://github.com/apache/answer/projects',
+              }
             ],
           },
           {
@@ -163,7 +168,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://twitter.com/answerdev',
+            href: 'https://x.com/ApacheAnswer',
             position: 'right',
             className: 'bi bi-twitter-x navbar-icon-link',
           },
@@ -173,7 +178,7 @@ const config = {
             className: 'bi bi-discord navbar-icon-link',
           },
           {
-            href: 'https://github.com/apache/incubator-answer',
+            href: 'https://github.com/apache/answer',
             position: 'right',
             className: 'bi bi-github navbar-icon-link',
           },
@@ -192,7 +197,7 @@ const config = {
   plugins: [
     // Use custom blog plugin
     [
-      "./plugins/blog-plugin",
+      './plugins/blog-plugin',
       {
         blogTitle: 'Answer Blog',
         blogDescription: 'Learn everything about Answer and leverage your Q&A community.',
@@ -204,7 +209,7 @@ const config = {
           if (locale !== 'en') {
             return `https://crowdin.com/project/answer-website/zh-CN`;
           }
-          return `https://github.com/apache/incubator-answer-website/edit/main/${blogDirPath}/${blogPath}`;
+          return `https://github.com/apache/answer-website/edit/main/${blogDirPath}/${blogPath}`;
         },
       },
     ],
@@ -221,7 +226,7 @@ const config = {
           if (locale !== 'en') {
             return `https://crowdin.com/project/answer-website/zh-CN`;
           }
-          return `https://github.com/apache/incubator-answer-website/edit/main/${versionDocsDirPath}/${docPath}`;
+          return `https://github.com/apache/answer-website/edit/main/${versionDocsDirPath}/${docPath}`;
         },
         showLastUpdateAuthor: true,
         showLastUpdateTime: true,
@@ -230,34 +235,16 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        redirects: [
-          {
-            to: '/community/support',
-            from: ['/contact', '/community'],
-          },
-          {
-            to: '/community/team',
-            from: '/community/about',
-          },
-          {
-            to: '/docs/development',
-            from: '/community/development',
-          },
-          {
-            to: '/docs/development/plugins',
-            from: '/community/plugins'
-          },
-          {
-            to:'/docs/development/plugins/plugin-config',
-            from: '/community/plugins/plugin-config'
-          },
-          {
-            to:'/docs/development/plugins/plugin-translation',
-            from: '/community/plugins/plugin-translation',
-          }
-        ],
+        redirects: redirectPaths,
       },
     ],
+    // local search plugin
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      ({
+        hashed: true,
+      }),
+    ]
   ],
 };
 

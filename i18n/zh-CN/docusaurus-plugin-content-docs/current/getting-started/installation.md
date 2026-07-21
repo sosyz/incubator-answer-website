@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 有多种方式启动 Apache Answer，你可以选择最适合你的方式。
 
-<Tabs>
+<Tabs queryString="method">
   <TabItem value="docker-compose" label="Docker compose" default>
 
 我们推荐使用 Docker Compose 来运行 Apache Answer。这是开始使用 Apache Answer 的最简单方法。
@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 :::
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/apache/incubator-answer/main/docker-compose.yaml | docker compose -p answer -f - up
+curl -fsSL https://raw.githubusercontent.com/apache/answer/main/docker-compose.yaml | docker compose -p answer -f - up
 ```
 
 Apache Answer 的默认端口是 `9080`，你可以通过 http://localhost:9080 访问它。
@@ -48,7 +48,7 @@ docker run -d -p 9080:80 -v answer-data:/data --name answer apache/answer:latest
   </TabItem>
   <TabItem value="binary" label="Binary">
 
-作为一个 Go 项目，Apache Answer 可以编译为二进制文件。你可以从[发布页面](https://github.com/apache/incubator-answer/releases)下载与你的操作系统匹配的二进制文件。
+作为一个 Go 项目，Apache Answer 可以编译为二进制文件。你可以从[发布页面](https://github.com/apache/answer/releases)下载与你的操作系统匹配的二进制文件。
 
 ```bash
 INSTALL_PORT=80 ./answer init -C ./answer-data/
@@ -69,6 +69,42 @@ INSTALL_PORT=80 ./answer init -C ./answer-data/
 我们使用 `-C` 标志来指示保存 Answer 数据的目录。
 
 :::
+
+  </TabItem>
+  <TabItem value="baota" label="宝塔面板">
+
+首先需要安装宝塔面板 9.2.0 及以上版本，前往[宝塔面板](https://www.bt.cn/new/download.html?r=dk_answer)官网，选择正式版的脚本下载安装。
+
+安装完成后，登录宝塔面板，点击左侧菜单栏的 `Docker`，进入应用商店，搜索 `Apache Answer`，点击安装进行配置：
+
+![应用商店搜索安装](/img/docs/baota-install.png)
+
+:::tip
+
+首次会提示安装 `Docker` 和 `Docker Compose` 服务，点击立即安装，若已安装请忽略。
+
+![安装Docker服务](/img/docs/baota-init-docker.png)
+
+:::
+
+需要填写以下内容用于完成基本配置的初始化：
+
+- 名称：应用名称，默认 `answer_随机字符`
+- 版本选择：默认 `latest`
+- 允许外部访问：如你需通过 `IP+Port` 直接访问，请勾选，如你已经设置了域名，请不要勾选此处
+- 端口：默认 `9080`，可自行修改
+- 网站名称：站点名称，如 `Apache Answer`
+- 访问地址：安装后将用来访问 Apache Answer 的浏览器地址
+- 联系邮箱：负责本网站的主要联系人的电子邮件地址
+- 管理员账号：管理员用户名
+- 管理员密码：管理员密码
+- 管理员邮箱：管理员邮箱。您需要此电子邮件才能登录，请务必记住管理员的邮箱和密码
+
+![安装配置信息](/img/docs/baota-install-config.png)
+
+点击确定提交后面板会自动进行应用初始化，不需要操作下文的安装步骤，等待初始化完成后即可通过刚才设置的**访问地址**进行访问。
+
+恭喜你！开始你的 Apache Answer 之旅吧！
 
   </TabItem>
 </Tabs>
